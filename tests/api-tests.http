@@ -1,0 +1,87 @@
+### ============================================================
+### API Test Dosyası
+### ============================================================
+### VS Code "REST Client" eklentisiyle çalışır.
+### Her isteğin üstündeki "Send Request" yazısına tıkla.
+### Eklenti yoksa Postman'e de kopyalayabilirsin.
+### ============================================================
+
+@nodeUrl = http://localhost:3000
+@pythonUrl = http://localhost:5000
+
+### --- Sağlık kontrolleri ---
+GET {{nodeUrl}}/health
+
+###
+GET {{pythonUrl}}/health
+
+### --- Tüm ürünler ---
+GET {{nodeUrl}}/products
+
+### --- Kategoriye göre filtre ---
+GET {{nodeUrl}}/products?category=elektronik
+
+### --- Tek ürün (+ Python'dan öneriler) ---
+GET {{nodeUrl}}/products/1
+
+### --- Yeni kullanıcı kaydı ---
+POST {{nodeUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "name": "Tuana",
+  "email": "tuana@example.com",
+  "password": "guclu_sifre_123"
+}
+
+### --- Giriş (seed'deki test kullanıcısı, şifre: 123456) ---
+POST {{nodeUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "123456"
+}
+
+### --- Sepete ürün ekle (user_id=1 test kullanıcısı) ---
+POST {{nodeUrl}}/cart
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "product_id": 1,
+  "quantity": 2
+}
+
+### --- Sepete ikinci ürün ---
+POST {{nodeUrl}}/cart
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "product_id": 3,
+  "quantity": 1
+}
+
+### --- Sepeti görüntüle ---
+GET {{nodeUrl}}/cart/1
+
+### --- Sepetten sipariş oluştur (transaction!) ---
+POST {{nodeUrl}}/orders
+Content-Type: application/json
+
+{
+  "user_id": 1
+}
+
+### --- Kullanıcının siparişleri ---
+GET {{nodeUrl}}/orders/1
+
+### --- Sipariş detayı ---
+GET {{nodeUrl}}/orders/detail/1
+
+### --- Python: öneriler ---
+GET {{pythonUrl}}/recommend/1
+
+### --- Python: satış istatistikleri ---
+GET {{pythonUrl}}/stats/sales
