@@ -16,7 +16,7 @@ const pool = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   // AWS RDS'e bağlanırken SSL gerekebilir. Lokalde kapalı.
-  // ssl: { rejectUnauthorized: false }
+  ssl: { rejectUnauthorized: false }
 });
 
 // Bağlantıyı bir kez test et (uygulama açılışında bilgi verir)
